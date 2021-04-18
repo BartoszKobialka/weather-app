@@ -1,0 +1,11 @@
+.found {
+  box-shadow: 0 0 10px #0f0;
+}
+
+.notFound {
+  box-shadow: 0 0 10px #f00;
+}
+
+input {
+  width: 100%;
+}
