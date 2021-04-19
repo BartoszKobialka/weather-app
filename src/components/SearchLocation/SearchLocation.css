@@ -1,4 +1,5 @@
 .search-container {
   position: relative;
   background: transparent;
+  z-index: 1000;
 }
