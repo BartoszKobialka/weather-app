@@ -8,6 +8,7 @@ export interface SearchLocationProps {
   locationsList: Location[];
   onLocationItemClicked: any;
   haveLocationsFound: boolean;
+  onLocationSubmit: any;
 }
 
 const SearchLocation = (props: SearchLocationProps) => {
@@ -22,6 +23,7 @@ const SearchLocation = (props: SearchLocationProps) => {
           placeholder="Type wanted location..."
         />
         <button
+          onClick={() => props.onLocationSubmit()}
           className="btn btn-outline-secondary"
           type="button"
           id="button-addon2"

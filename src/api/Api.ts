@@ -5,6 +5,7 @@ import {
   GetLocationsByCoords,
   GetLocationsByName,
 } from '../commonInterfaces/GetLocationsParams.interface';
+import Forecast from '../commonInterfaces/Forecast.interface';
 
 export interface ErrorResponse {
   status: number;
@@ -29,6 +30,23 @@ class Api {
       });
 
       return Promise.resolve(data);
+    } catch (err) {
+      return Promise.reject(this.handleError(err));
+    }
+  };
+
+  public getForecast = async (
+    woeid: number,
+    date: string
+  ): Promise<Forecast | Error> => {
+    try {
+      const { data } = await this.api.get<Forecast[]>(
+        `location/${woeid}/${date}`
+      );
+      if (data.length === 0)
+        Promise.reject({ status: 0, message: 'Empty data' });
+
+      return Promise.resolve(data[0]);
     } catch (err) {
       return Promise.reject(this.handleError(err));
     }
