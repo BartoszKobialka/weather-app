@@ -1,0 +1,57 @@
+import axios, { AxiosError, AxiosInstance } from 'axios';
+import env from 'react-dotenv';
+import Location from '../commonInterfaces/Location.interface';
+import {
+  GetLocationsByCoords,
+  GetLocationsByName,
+} from '../commonInterfaces/GetLocationsParams.interface';
+
+export interface ErrorResponse {
+  status: number;
+  message: string;
+}
+
+class Api {
+  private api: AxiosInstance;
+
+  constructor() {
+    this.api = axios.create({
+      baseURL: env.API_URL,
+    });
+  }
+
+  public getLocations = async (
+    location: GetLocationsByCoords | GetLocationsByName
+  ): Promise<Location[] | Error> => {
+    try {
+      const { data } = await this.api.get<Location[]>(`search/`, {
+        params: location,
+      });
+
+      return Promise.resolve(data);
+    } catch (err) {
+      return Promise.reject(this.handleError(err));
+    }
+  };
+
+  handleError(e: AxiosError): ErrorResponse {
+    let error: ErrorResponse = {
+      status: 0,
+      message: '',
+    };
+    if (e.response) {
+      error.message = 'Not fount, forbiden, etc.';
+      error.status = 400;
+    } else if (e.request) {
+      error.message = 'Some trouble on server side.';
+      error.status = 500;
+    } else {
+      error.message = e.message;
+      error.status = 0;
+    }
+
+    return error;
+  }
+}
+
+export default new Api();
