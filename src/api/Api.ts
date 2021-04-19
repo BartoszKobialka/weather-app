@@ -1,16 +1,17 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import env from 'react-dotenv';
 import Location from '../commonInterfaces/Location.interface';
+import {
+  GetLocationsByCoords,
+  GetLocationsByName,
+} from '../commonInterfaces/GetLocationsParams.interface';
 
 export interface ErrorResponse {
   status: number;
   message: string;
 }
-export interface GetLocationsParams {
-  name: string;
-}
 
-export default class Api {
+class Api {
   private api: AxiosInstance;
 
   constructor() {
@@ -20,16 +21,16 @@ export default class Api {
   }
 
   public getLocations = async (
-    location: GetLocationsParams
-  ): Promise<Location[] | ErrorResponse> => {
+    location: GetLocationsByCoords | GetLocationsByName
+  ): Promise<Location[] | Error> => {
     try {
-      const { data } = await this.api.get<Location[]>(
-        `search/?query=${location.name}`
-      );
+      const { data } = await this.api.get<Location[]>(`search/`, {
+        params: location,
+      });
 
-      return data;
+      return Promise.resolve(data);
     } catch (err) {
-      return this.handleError(err);
+      return Promise.reject(this.handleError(err));
     }
   };
 
@@ -52,3 +53,5 @@ export default class Api {
     return error;
   }
 }
+
+export default new Api();

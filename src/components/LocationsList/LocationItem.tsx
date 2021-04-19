@@ -1,9 +1,14 @@
-import React from 'react';
 import Location from '../../commonInterfaces/Location.interface';
 
-const LocationItem = (props: { location: Location }) => {
+const LocationItem = (props: {
+  location: Location;
+  onLocationItemClicked: any;
+}) => {
   return (
-    <button className="badge badge-primary my-1 w-100">
+    <button
+      onClick={() => props.onLocationItemClicked(props.location)}
+      className="btn btn-dark my-1 w-100"
+    >
       {props.location.title}
     </button>
   );
