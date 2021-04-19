@@ -1,0 +1,61 @@
+@import '../styles/_mixins.scss';
+
+.forecast-card {
+  @include flex-center;
+  background-color: rgb(59, 59, 59);
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px #000;
+}
+
+.forecast-card-text-lg {
+  @include flex-center;
+  width: 100%;
+  font-size: 2em;
+}
+
+.forecast-card-text-md {
+  @include flex-center;
+  width: 100%;
+  font-size: 1.5em;
+}
+
+.forecast-card-temp-default {
+  font-size: 3.5em;
+}
+
+.forecast-card-temp-container {
+  @include flex-center;
+  flex-wrap: wrap;
+  span {
+    width: 100%;
+    padding-left: 10px;
+  }
+}
+
+.forecast-card-img {
+  width: fit-content;
+  height: fit-content;
+}
+
+.forecast-card-wind {
+  @include flex-center;
+  width: 100%;
+  span {
+    font-size: 1.5em;
+    margin-right: 10%;
+  }
+  img {
+    width: 2em;
+    height: 2em;
+    transition: all 0.5s ease-out;
+  }
+  div {
+    @include flex-center;
+    height: 5em;
+    width: 5em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../assets/compass.png');
+  }
+}
