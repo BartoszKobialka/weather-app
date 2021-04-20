@@ -22,14 +22,6 @@ const SearchLocation = (props: SearchLocationProps) => {
           className="form-control"
           placeholder="Type wanted location..."
         />
-        {/* <button
-          onClick={() => props.onLocationSubmit()}
-          className="btn btn-outline-secondary"
-          type="button"
-          id="button-addon2"
-        >
-          Show weather
-        </button> */}
       </div>
       {!props.haveLocationsFound && props.locationText !== '' && (
         <div className="my-2 alert alert-danger" role="alert">

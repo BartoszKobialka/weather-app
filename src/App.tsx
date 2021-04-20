@@ -37,15 +37,17 @@ class App extends React.Component<AppProps, AppState> {
 
   componentDidMount() {
     const localStoredLocation = localStorage.getItem('lastLocation');
+
     if (localStoredLocation === null) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        this.getLocationsList({ lattlong: `${latitude},${longitude}` });
-      });
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          this.getLocationsList({ lattlong: `${latitude},${longitude}` });
+        });
+      }
     } else {
       this.setState({
         currentLocation: JSON.parse(localStoredLocation as string),
-        dateList: Array<string>(),
       });
       this.fillDateList();
     }
@@ -80,7 +82,6 @@ class App extends React.Component<AppProps, AppState> {
       currentLocation: selectedLocation,
       locationsList: Array<Location>(),
       inputLocation: selectedLocation.title,
-      dateList: Array<string>(),
     });
 
     localStorage.setItem('lastLocation', JSON.stringify(selectedLocation));

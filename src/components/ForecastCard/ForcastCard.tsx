@@ -32,15 +32,20 @@ class ForecastCard extends React.Component<
     this.getForecast(this.props.location.woeid, this.props.date);
   }
 
-  componentDidUpdate() {
-    this.forecastParser = new ForecastParser(this.props.isImperialUnit);
+  componentDidUpdate(
+    previousProps: ForecastCardProps,
+    previousState: ForecastCardState
+  ) {
+    if (previousProps !== this.props) {
+      this.forecastParser = new ForecastParser(this.props.isImperialUnit);
+      this.getForecast(this.props.location.woeid, this.props.date);
+    }
   }
 
   getForecast = (woeid: number, date: string) => {
     Api.getForecast(woeid, date)
       .then((forecast) => {
         this.setState({ forecast: forecast as Forecast });
-        console.log(forecast);
       })
       .catch((error) => {
         console.log(error);
