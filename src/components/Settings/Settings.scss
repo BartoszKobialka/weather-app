@@ -1,4 +1,4 @@
-@import '../styles/mixins';
+@import '../../styles/mixins';
 
 .settings {
   @include flex-center;
@@ -8,7 +8,7 @@
   bottom: 10px;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 50%;
+  border-radius: 40px;
   transition: all 0.5s ease-in;
   img {
     width: 74px;

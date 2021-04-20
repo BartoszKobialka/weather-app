@@ -1,4 +1,4 @@
-@import '../styles/_mixins.scss';
+@import '../../styles/_mixins.scss';
 
 .forecast-card {
   @include flex-center;
@@ -56,6 +56,6 @@
     width: 5em;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('../assets/compass.png');
+    background-image: url('../../assets/compass.png');
   }
 }

@@ -1,4 +1,4 @@
-import './SearchLocation.css';
+import './SearchLocation.scss';
 import Location from '../../commonInterfaces/Location.interface';
 import LocationsList from '../LocationsList/LocationsList';
 
@@ -22,17 +22,17 @@ const SearchLocation = (props: SearchLocationProps) => {
           className="form-control"
           placeholder="Type wanted location..."
         />
-        <button
+        {/* <button
           onClick={() => props.onLocationSubmit()}
           className="btn btn-outline-secondary"
           type="button"
           id="button-addon2"
         >
           Show weather
-        </button>
+        </button> */}
       </div>
-      {!props.haveLocationsFound && (
-        <div className="alert alert-danger" role="alert">
+      {!props.haveLocationsFound && props.locationText !== '' && (
+        <div className="my-2 alert alert-danger" role="alert">
           Can't find this location.
         </div>
       )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import settingsIcon from '../assets/settings-icon.png';
+import settingsIcon from '../../assets/settings-icon.png';
 import './Settings.scss';
 
 export interface SettingsProps {

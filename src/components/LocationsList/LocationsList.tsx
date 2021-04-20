@@ -1,6 +1,6 @@
 import Location from '../../commonInterfaces/Location.interface';
 import LocationItem from './LocationItem';
-import './LocationList.css';
+import './LocationList.scss';
 
 export interface LocationsListProps {
   locationsList: Location[];

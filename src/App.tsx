@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import SearchLocation from './components/SearchLocation/SearchLocation';
 import Api from './api/Api';
 import Location from './commonInterfaces/Location.interface';
@@ -9,6 +9,7 @@ import {
 } from './commonInterfaces/GetLocationsParams.interface';
 import ForecastCard from './components/ForecastCard/ForcastCard';
 import Settings from './components/Settings/Settings';
+import MakeDataList from './Utils/MakeDataList';
 
 export interface AppProps {}
 
@@ -26,12 +27,7 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
     this.state = {
       inputLocation: '',
-      locationsList: Array<Location>({
-        title: 'San Francisco',
-        location_type: 'City',
-        woeid: 2487956,
-        latt_long: '37.777119, -122.41964',
-      }),
+      locationsList: Array<Location>(),
       currentLocation: {} as Location,
       haveLocationsFound: true,
       isImperialUnit: false,
@@ -40,14 +36,18 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   componentDidMount() {
-    const localStoredLocation = localStorage.getItem('woeid');
+    const localStoredLocation = localStorage.getItem('lastLocation');
     if (localStoredLocation === null) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
         this.getLocationsList({ lattlong: `${latitude},${longitude}` });
       });
     } else {
-      // TODO: GET WEATHER
+      this.setState({
+        currentLocation: JSON.parse(localStoredLocation as string),
+        dateList: Array<string>(),
+      });
+      this.fillDateList();
     }
   }
 
@@ -83,36 +83,25 @@ class App extends React.Component<AppProps, AppState> {
       dateList: Array<string>(),
     });
 
-    localStorage.setItem('woeid', selectedLocation.woeid.toString());
+    localStorage.setItem('lastLocation', JSON.stringify(selectedLocation));
+    this.fillDateList();
   };
 
   handleUnitsSystemChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ isImperialUnit: event.target.checked });
   };
 
+  fillDateList = () => {
+    this.setState({ dateList: MakeDataList() });
+  };
+
   handleLocationSubmit = () => {
-    let dateList = Array<string>();
-
-    for (let i = 0; i < 3; i++) {
-      let currentDate = new Date(
-        new Date().getTime() + i * 24 * 60 * 60 * 1000
-      );
-      let day = currentDate.getDate();
-      let month = currentDate.getMonth() + 1;
-      let year = currentDate.getFullYear();
-
-      dateList.push(`${year}/${month}/${day}`);
-    }
-
-    this.setState({ dateList: dateList });
+    this.fillDateList();
   };
 
   render() {
     return (
-      <div
-        style={{ overflowX: 'hidden', minHeight: '100vh' }}
-        className="fluid-container"
-      >
+      <div className="fluid-container App">
         <div className="row">
           <div className="col col-12 col-sm-12 col-md-10 col-lg-6 d-flex justify-content-center mx-auto">
             <SearchLocation
