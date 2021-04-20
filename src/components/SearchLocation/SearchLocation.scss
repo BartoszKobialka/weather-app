@@ -2,4 +2,8 @@
   position: relative;
   background: transparent;
   z-index: 1000;
+  height: 80px;
+  input {
+    box-shadow: 5px 5px 5px rgb(46, 46, 46);
+  }
 }

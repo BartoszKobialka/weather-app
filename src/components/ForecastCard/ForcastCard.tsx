@@ -1,9 +1,10 @@
 import React from 'react';
 import './ForecastCard.scss';
-import arrow from '../assets/arrow.png';
+import arrow from '../../assets/arrow.png';
 import Forecast from '../../commonInterfaces/Forecast.interface';
 import Api from '../../api/Api';
 import Location from '../../commonInterfaces/Location.interface';
+import ForecastParser from '../../Utils/ForecastParser';
 
 export interface ForecastCardProps {
   location: Location;
@@ -19,13 +20,20 @@ class ForecastCard extends React.Component<
   ForecastCardProps,
   ForecastCardState
 > {
+  public forecastParser: ForecastParser;
+
   constructor(props: ForecastCardProps) {
     super(props);
     this.state = { forecast: {} as Forecast };
+    this.forecastParser = new ForecastParser(this.props.isImperialUnit);
   }
 
   componentDidMount() {
     this.getForecast(this.props.location.woeid, this.props.date);
+  }
+
+  componentDidUpdate() {
+    this.forecastParser = new ForecastParser(this.props.isImperialUnit);
   }
 
   getForecast = (woeid: number, date: string) => {
@@ -42,41 +50,6 @@ class ForecastCard extends React.Component<
       });
   };
 
-  getTemp = (temp: number): string => {
-    try {
-      if (isNaN(temp)) throw Error();
-
-      if (this.props.isImperialUnit)
-        return (temp * 1.8 + 32).toFixed(1).toString() + '\xB0C';
-      else return temp.toFixed(1).toString() + '\xB0C';
-    } catch (e) {
-      return '';
-    }
-  };
-
-  getVisibility = (visibility: number): string => {
-    try {
-      if (isNaN(visibility)) throw Error();
-
-      if (this.props.isImperialUnit)
-        return visibility.toFixed(1).toString() + 'mi';
-      else return (visibility * 1.6).toFixed(1).toString() + 'km';
-    } catch (e) {
-      return '';
-    }
-  };
-
-  getWindSpeed = (speed: number): string => {
-    try {
-      if (isNaN(speed)) throw Error();
-
-      if (this.props.isImperialUnit) return speed.toFixed(1).toString() + 'mph';
-      else return (speed * 1.6).toFixed(1).toString() + 'kmh';
-    } catch (e) {
-      return '';
-    }
-  };
-
   render() {
     const { forecast } = this.state;
 
@@ -89,11 +62,11 @@ class ForecastCard extends React.Component<
         <div className="w-100 d-flex align-content-center justify-content-center my-4">
           <div className="d-flex align-content-center">
             <div className="forecast-card-temp-default">
-              {this.getTemp(forecast.the_temp)}
+              {this.forecastParser.getTemp(forecast.the_temp)}
             </div>
             <div className="forecast-card-temp-container">
-              <span>{this.getTemp(forecast.max_temp)}</span>
-              <span>{this.getTemp(forecast.min_temp)}</span>
+              <span>{this.forecastParser.getTemp(forecast.max_temp)}</span>
+              <span>{this.forecastParser.getTemp(forecast.min_temp)}</span>
             </div>
           </div>
           <div className="d-flex align-items-center justify-content-center">
@@ -106,7 +79,7 @@ class ForecastCard extends React.Component<
         </div>
         <div className="forecast-card-text-lg">Wind</div>
         <div className="forecast-card-wind">
-          <span>{this.getWindSpeed(forecast.wind_speed)}</span>
+          <span>{this.forecastParser.getWindSpeed(forecast.wind_speed)}</span>
           <div>
             <img
               style={{
@@ -119,7 +92,7 @@ class ForecastCard extends React.Component<
         </div>
         <div className="w-100 d-flex align-content-center justify-content-center my-4">
           <div className="forecast-card-text-md mt-2">
-            Visibility {this.getVisibility(forecast.visibility)}
+            Visibility {this.forecastParser.getVisibility(forecast.visibility)}
           </div>
           <div className="forecast-card-text-md mt-2">
             Humidity {forecast.humidity}%
