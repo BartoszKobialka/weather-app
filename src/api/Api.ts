@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import env from 'react-dotenv';
 import Location from '../commonInterfaces/Location.interface';
 import {
   GetLocationsByCoords,
@@ -17,7 +16,7 @@ class Api {
 
   constructor() {
     this.api = axios.create({
-      baseURL: env.API_URL,
+      baseURL: 'https://www.metaweather.com/api/location/',
     });
   }
 

@@ -13,45 +13,57 @@ export interface ForecastCardProps {
 }
 
 export interface ForecastCardState {
-  forecast: Forecast;
+  forecast: Forecast | undefined;
 }
 
 class ForecastCard extends React.Component<
   ForecastCardProps,
   ForecastCardState
 > {
-  public forecastParser: ForecastParser;
+  forecastParser: ForecastParser;
+  _isMounted = false;
 
   constructor(props: ForecastCardProps) {
     super(props);
-    this.state = { forecast: {} as Forecast };
+    this.state = { forecast: undefined };
     this.forecastParser = new ForecastParser(this.props.isImperialUnit);
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.getForecast(this.props.location.woeid, this.props.date);
   }
 
-  componentDidUpdate() {
-    this.forecastParser = new ForecastParser(this.props.isImperialUnit);
+  componentDidUpdate(previousProps: ForecastCardProps) {
+    if (previousProps !== this.props) {
+      this.forecastParser = new ForecastParser(this.props.isImperialUnit);
+      this.getForecast(this.props.location.woeid, this.props.date);
+    }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   getForecast = (woeid: number, date: string) => {
     Api.getForecast(woeid, date)
       .then((forecast) => {
-        this.setState({ forecast: forecast as Forecast });
-        console.log(forecast);
+        if (this._isMounted) this.setState({ forecast: forecast as Forecast });
       })
       .catch((error) => {
-        console.log(error);
-        this.setState({
-          forecast: {} as Forecast,
-        });
+        if (this._isMounted) {
+          console.log(error);
+          this.setState({
+            forecast: undefined,
+          });
+        }
       });
   };
 
   render() {
-    const { forecast } = this.state;
+    if (!this.state.forecast) return <div></div>;
+
+    const forecast = this.state.forecast as Forecast;
 
     return (
       <div className="col-10 col-sm-10 col-md-7 col-lg-7 col-xl-3 col-xxl-2 flex-wrap forecast-card mx-auto my-4 py-3">

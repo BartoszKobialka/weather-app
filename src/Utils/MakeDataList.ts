@@ -1,4 +1,4 @@
-export default () => {
+const MakeDateList = () => {
   let dateList = Array<string>();
 
   for (let i = 0; i < 3; i++) {
@@ -12,3 +12,5 @@ export default () => {
 
   return dateList;
 };
+
+export default MakeDateList;
