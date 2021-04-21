@@ -3,11 +3,11 @@
 ## About
 
 Simple weather app to show weather forecast for next three days.\
-Weather and locations data comes from [https://www.metaweather.com/api/](Metaweather API).
+Weather and locations data comes from [Metaweather API](https://www.metaweather.com/api/).
 
 ## Requirements
 
- - Download and install [https://nodejs.org/en/download/](node.js)
+ - Download and install [node.js](https://nodejs.org/en/download/)
  - Install CORS Everywhere browser extension. The API server has same origin policy.
 
 ## Run the project
