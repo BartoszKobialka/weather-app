@@ -1,5 +1,10 @@
 # Getting Started 
 
+## About
+
+Simple weather app to show weather forecast for next three days.\
+Weather and locations data comes from [https://www.metaweather.com/api/](Metaweather API).\ 
+
 ## Requirements
 
  - Download and install [https://nodejs.org/en/download/](node.js)
