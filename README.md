@@ -7,8 +7,7 @@
 
 ## Run the project
 
-Clone repository.
-Install dependencies using `npm install`.
+Clone repository and install dependencies using `npm install`.
 
 ## Available Scripts
 
