@@ -3,7 +3,7 @@
 ## About
 
 Simple weather app to show weather forecast for next three days.\
-Weather and locations data comes from [https://www.metaweather.com/api/](Metaweather API).\ 
+Weather and locations data comes from [https://www.metaweather.com/api/](Metaweather API).
 
 ## Requirements
 
