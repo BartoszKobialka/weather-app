@@ -21,7 +21,7 @@ test('getVisibility in metrics unit', () => {
   const visibilityValue = 5.5;
   const returnedValue = parser.getVisibility(visibilityValue);
 
-  expect(returnedValue).toMatch('5.5km');
+  expect(returnedValue).toMatch('8.8km');
 });
 
 test('getVisibility in imperial unit', () => {
@@ -29,15 +29,15 @@ test('getVisibility in imperial unit', () => {
   const visibilityValue = 5.6;
   const returnedValue = parser.getVisibility(visibilityValue);
 
-  expect(returnedValue).toMatch('9.0mi');
+  expect(returnedValue).toMatch('5.6mi');
 });
 
 test('getWindSpeed in metrics unit', () => {
   const parser = new ForecastParser(false);
-  const speedValue = 5.5;
+  const speedValue = 5.6;
   const returnedValue = parser.getWindSpeed(speedValue);
 
-  expect(returnedValue).toMatch('5.5kmh');
+  expect(returnedValue).toMatch('9.0kmh');
 });
 
 test('getWindSpeed in imperial unit', () => {
@@ -45,5 +45,5 @@ test('getWindSpeed in imperial unit', () => {
   const speedValue = 5.6;
   const returnedValue = parser.getWindSpeed(speedValue);
 
-  expect(returnedValue).toMatch('9.0mph');
+  expect(returnedValue).toMatch('5.6mph');
 });

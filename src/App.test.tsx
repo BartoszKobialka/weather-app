@@ -8,10 +8,8 @@ test('Renders search locations bar', () => {
   expect(searchBar).toBeInTheDocument();
 });
 
-// test('Renders settings', () => {
-//   const app = render(<App />);
-//   const searchBar = app.getByPlaceholderText('Type wanted location...');
-//   fireEvent.change(searchBar, { target: { value: 'aaaaaaaaa' } });
-
-//   expect(app).toBeInTheDocument();
-// });
+test('Renders settings', () => {
+  const app = render(<App />);
+  const settings = app.getByAltText('settings');
+  expect(settings).toBeInTheDocument();
+});

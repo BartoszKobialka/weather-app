@@ -3,20 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import LocationsList from './LocationsList';
 import Location from '../../commonInterfaces/Location.interface';
 
-const locationsTestList = [
-  {
-    title: 'Warsaw',
-    location_type: 'City',
-    woeid: 523920,
-    latt_long: '52.235352,21.009390',
-  },
-  {
-    title: 'Newark',
-    location_type: 'City',
-    woeid: 2459269,
-    latt_long: '40.731972,-74.174179',
-  },
-];
+const locationsTestList = require('../../__testData__/Locations.json');
 
 test('Renders 2 items elements', () => {
   const locationsList = render(
